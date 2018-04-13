@@ -1,0 +1,16 @@
+{
+  "name": "go-game",
+  "version": "1.0.0",
+  "description": "a simple go game",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^4.0.2",
+    "typescript": "^2.8.1"
+  }
+}
