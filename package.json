@@ -1,7 +1,7 @@
 {
   "name": "go-game",
   "version": "1.0.0",
-  "description": "a simpble go game",
+  "description": "a simpble go game(without mistakes)",
   "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
