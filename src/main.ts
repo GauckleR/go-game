@@ -1,8 +1,4 @@
-import { sayHello } from "./greet";
+import { GoGameController } from "./GoGameController";
 
-function showHello(divName: string, name: string) {
-    const elt = document.getElementById(divName);
-    elt.innerText = sayHello(name);
-}
-
-showHello("greeting", "TypeScript");
+const controller = new GoGameController();
+controller.init();
