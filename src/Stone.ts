@@ -7,9 +7,9 @@ export class Stone{
     //the owner
     private owner: Player;
 
-    constructor(owner: Player, color: string){
+    constructor(owner: Player){
         this.owner = owner;
-        this.color = color;
+        this.color = owner.getColor();
     }
 
     public getColor() : string{

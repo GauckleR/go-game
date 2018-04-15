@@ -9,11 +9,12 @@ export class Go_Game{
     private board: Board;
 
     constructor(){
-        //die Spieler werden zugewiesen
-        this.players[0] = new Player("#000000", "Player 1");
-        this.players[1] = new Player("#FFFFFF", "Player 2");
+        //the players
+        this.players = new Array<Player>();
+        this.players.push(new Player("#000000", "Player 1"));
+        this.players.push(new Player("#FFFFFF", "Player 2"));
 
-        //das Spielbrett
+        //the board
         this.board = new Board(19);
     }
 
