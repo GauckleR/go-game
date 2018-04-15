@@ -15,6 +15,7 @@ export class BoardPosition{
     constructor( x: number, y: number){
         this.x = x;
         this.y = y;
+        this.neighbours = new Array<BoardPosition>();
     }
 
     //getter and setter

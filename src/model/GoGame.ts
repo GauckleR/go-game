@@ -46,9 +46,10 @@ export class GoGame{
     public makePlayerMove(posX, posY): boolean{
         let stone = this.activePlayer.popStone();
         let success = this.board.placeStone(posX, posY, stone);
-        if (success)
+        if (success){
             this.switchActivePlayer();
-        
+        }
+        this.board.removeSurrounded();
         return success;
     }
 

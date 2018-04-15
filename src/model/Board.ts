@@ -20,6 +20,7 @@ export class Board {
             }
             this.boardPositions.push(positions);
         }
+        this.setNeighbour();
     }
     
     //getter and setter
@@ -35,6 +36,8 @@ export class Board {
         let isPlaceAble = false;
         if(this.boardPositions[posX][poxY].getStone() == null){
             this.boardPositions[posX][poxY].setStone(stone);
+            console.log("now the owner is",this.boardPositions[posX][poxY].getStone().getOwner() );
+            console.log(this.boardPositions[posX][poxY].neighbours);
             isPlaceAble = true;
         }
         return isPlaceAble;
@@ -83,6 +86,31 @@ export class Board {
                 let neigbour3 = x+1 < this.size ? this.boardPositions[x+1][y] : null;
                 let neigbour4 = y+1 < this.size ? this.boardPositions[x][y+1] : null;
                 pos.neighbours.push(neigbour1,neigbour2,neigbour3,neigbour4);
+            }
+        }
+    }
+
+    //Looks at surrounded stones and destroyes them
+    public removeSurrounded(): void{
+        for(let x of this.boardPositions){
+            for (let pos of x){
+                if(pos.testSurround()){
+                    let enemySurrounder = 0;
+                    let surrounder = 0;
+                    for(let neighbour of pos.neighbours){
+                        if(neighbour != null){
+                            surrounder++;
+                            console.log("enemy1:",neighbour.getStone().getOwner.name);
+                            console.log("enemy2:",neighbour.getStone().getOwner.name);
+                            if(neighbour.getStone().getOwner != pos.getStone().getOwner){
+                                enemySurrounder++;
+                            }
+                        }
+                    }
+                    if(enemySurrounder == surrounder){
+                        pos.setStone(null);
+                    }
+                }
             }
         }
     }
