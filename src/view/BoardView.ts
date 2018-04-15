@@ -1,4 +1,5 @@
-import {GoGameController} from "./GoGameController";
+import {GoGameController} from "./../controller/GoGameController";
+import {Board} from "./../model/Board";
 
 interface ViewOnclickListener{
     notifyOnclick(posX: number, posY: number): void;
@@ -7,28 +8,32 @@ interface ViewOnclickListener{
 export class BoardView {
     private controller: GoGameController;
     private onclickListeners: ViewOnclickListener[];
-    private cells: HTMLDivElement[];
+    private cells: HTMLDivElement[][];
 
     constructor(controller: GoGameController){
         this.controller = controller;
         this.onclickListeners = [];
-        this.cells = [];
     }
 
     public renderBoard(divName: string, size: number, pixelPerCell: number): void {
         const parentDiv = document.getElementById(divName);
+
+        this.cells = new Array<Array<HTMLDivElement>>()
+        for (let i = 0; i < size; i++) {
+            this.cells.push(new Array<HTMLDivElement>());
+        }
 
         let clickGrid = document.createElement("div");
         clickGrid.style.position = "absolute";
         clickGrid.style.top = "0 px";
         clickGrid.style.left = "0 px";
 
-        for(let i = 0; i < size + 1; i++) {
+        for(let i = 0; i < size; i++) {
             let rowDiv = document.createElement("div");
-            rowDiv.style.width = pixelPerCell * (size + 1) + "px";
+            rowDiv.style.width = pixelPerCell * (size) + "px";
             rowDiv.style.height = pixelPerCell + "px";
 
-            for(let j = 0; j < size + 1; j++) {
+            for(let j = 0; j < size; j++) {
                 var div = document.createElement("div");
                 div.classList.add("cell");
                 div.style.width = pixelPerCell + "px";
@@ -42,10 +47,10 @@ export class BoardView {
                             listener.notifyOnclick(posX, posY);
                         }
                     }
-                })(j, size - i).bind(this), false);
+                })(j, size - 1 - i).bind(this), false);
 
                 rowDiv.appendChild(div)
-                this.cells.push(div);
+                this.cells[size - 1 - i].push(div);
             }
             clickGrid.appendChild(rowDiv);
         }
@@ -55,11 +60,11 @@ export class BoardView {
         lineGrid.style.top = pixelPerCell / 2 + 10 + "px";
         lineGrid.style.left = pixelPerCell / 2 + 10 + "px";
 
-        for (let i = 0; i < size; i++) {
+        for (let i = 0; i < size -1; i++) {
             let rowDiv = document.createElement("div");
             rowDiv.style.width = pixelPerCell * size + "px";
             rowDiv.style.height = pixelPerCell + "px";
-            for (let j = 0; j < size; j++) {
+            for (let j = 0; j < size - 1; j++) {
                 var div = document.createElement("div");
                 div.classList.add("cell");
                 div.style.width = pixelPerCell + "px";
@@ -74,14 +79,26 @@ export class BoardView {
         parentDiv.appendChild(clickGrid);
     }
 
-    public renderStones(stones: string[]){
-        for(let cell of this.cells){
-            cell.innerText = "";
-        }
+    public renderStones(board: Board){
+        let positions = board.getBoardPositions();
+        
+        for(let i = 0; i < positions.length; i++){
+            for(let j = 0; j < positions[i].length; j++){
+                let stone = positions[i][j].getStone();
+                let cell = this.cells[i][j];
 
-        for(let i = 0; i < this.cells.length; i++){
-            let cell = this.cells[i];
-            cell.innerText = stones[i];
+                cell.innerText = "";
+
+                if(stone != null){
+                    let stoneDiv = document.createElement("div");
+                    stoneDiv.style.backgroundColor = stone.getColor();
+                    stoneDiv.style.width = +(cell.offsetWidth) / 2 + "px";
+                    stoneDiv.style.height = +(cell.offsetHeight) / 2 + "px";
+                    stoneDiv.style.marginTop = +(cell.offsetHeight) / 4 + "px";
+                    stoneDiv.style.marginLeft = +(cell.offsetWidth) / 4 + "px";
+                    cell.appendChild(stoneDiv);
+                }
+            }
         }
     }
 

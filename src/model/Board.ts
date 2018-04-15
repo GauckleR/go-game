@@ -12,12 +12,13 @@ export class Board {
     constructor(size: number){
         this.size = size;
         
+        this.boardPositions = new Array<Array<BoardPosition>>();
         for(let x = 0; x< size; x++){
             let positions = new Array<BoardPosition>();
             for(let y =0; y < size; y++){
                 positions[y] = new BoardPosition(x,y);
             }
-            this.boardPositions[x] = positions;
+            this.boardPositions.push(positions);
         }
     }
     
@@ -50,6 +51,10 @@ export class Board {
             }
         }
         return positions;
+    }
+
+    public getBoardPositions(): BoardPosition[][]{
+        return this.boardPositions;
     }
 
     //counts the stones of one player (needs a player)
