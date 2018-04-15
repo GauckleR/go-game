@@ -67,4 +67,18 @@ export class Board {
         }
         return counter;
     }
+
+    //sets the four neighbour (can be less at the border of the game board)
+    public setNeighbour() : void{
+        for(let x = 0; x < this.size; x++){
+            for(let y = 0; y< this.size; y++){
+                let pos = this.boardPositions[x][y];
+                let neigbour1 = x-1 >= 0 ? this.boardPositions[x-1][y] : null;
+                let neigbour2 = y-1 >= 0 ? this.boardPositions[x][y-1] : null;
+                let neigbour3 = x+1 < this.size ? this.boardPositions[x+1][y] : null;
+                let neigbour4 = y+1 < this.size ? this.boardPositions[x][y+1] : null;
+                pos.neighbours.push(neigbour1,neigbour2,neigbour3,neigbour4);
+            }
+        }
+    }
 }
