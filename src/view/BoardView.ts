@@ -38,7 +38,7 @@ export class BoardView {
                 div.classList.add("cell");
                 div.style.width = pixelPerCell + "px";
                 div.style.height = pixelPerCell + "px";
-                div.style.outline = "1px solid red";
+                // div.style.outline = "1px solid red";
 
                 div.addEventListener('click', ((posX, posY) => {
                     return () => {
@@ -47,7 +47,7 @@ export class BoardView {
                             listener.notifyOnclick(posX, posY);
                         }
                     }
-                })(j, size - 1 - i).bind(this), false);
+                })(size - 1 - i, j).bind(this), false);
 
                 rowDiv.appendChild(div)
                 this.cells[size - 1 - i].push(div);

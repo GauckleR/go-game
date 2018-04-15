@@ -31,7 +31,7 @@ export class Board {
     }
 
     //places a Stone at pox XY
-    public placeStone(posX: number, poxY: number, stone: Stone): Boolean{
+    public placeStone(posX: number, poxY: number, stone: Stone): boolean{
         let isPlaceAble = false;
         if(this.boardPositions[posX][poxY].getStone() == null){
             this.boardPositions[posX][poxY].setStone(stone);
