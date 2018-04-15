@@ -1,4 +1,4 @@
-import { BoardView } from "./BoardView";
+import { BoardView } from "./../view/BoardView";
 
 export class GoGameController{
     public init(){
