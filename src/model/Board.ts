@@ -36,8 +36,6 @@ export class Board {
         let isPlaceAble = false;
         if(this.boardPositions[posX][poxY].getStone() == null){
             this.boardPositions[posX][poxY].setStone(stone);
-            console.log("now the owner is",this.boardPositions[posX][poxY].getStone().getOwner() );
-            console.log(this.boardPositions[posX][poxY].neighbours);
             isPlaceAble = true;
         }
         return isPlaceAble;
@@ -94,22 +92,12 @@ export class Board {
     public removeSurrounded(): void{
         for(let x of this.boardPositions){
             for (let pos of x){
-                if(pos.testSurround()){
-                    let enemySurrounder = 0;
-                    let surrounder = 0;
-                    for(let neighbour of pos.neighbours){
-                        if(neighbour != null){
-                            surrounder++;
-                            console.log("enemy1:",neighbour.getStone().getOwner.name);
-                            console.log("enemy2:",neighbour.getStone().getOwner.name);
-                            if(neighbour.getStone().getOwner != pos.getStone().getOwner){
-                                enemySurrounder++;
-                            }
-                        }
-                    }
-                    if(enemySurrounder == surrounder){
-                        pos.setStone(null);
-                    }
+                let group = new Array<BoardPosition>();
+                if(pos.testSurround(group, pos, this.boardPositions, this.size)){
+                    //something
+                }
+                for(let member of group){
+                    this.boardPositions[member.getX()][member.getY()] = null;
                 }
             }
         }

@@ -36,19 +36,37 @@ export class BoardPosition{
     }
 
     //tests if the stone is != null and if he is surrounded
-    public testSurround(): boolean{
-        let isSurrounded;
+    public testSurround(testedInGroup: BoardPosition[], pos: BoardPosition, allBoardPositions: BoardPosition[][], size: number): boolean{
+        let isSurrounded = true;
+        let neighbours = new Array<BoardPosition>();
+        let x = pos.getX();
+        let y = pos.getY();
+        neighbours[0] = x-1 >= 0 ? allBoardPositions[x-1][y] : null;
+        neighbours[1] = y-1 >= 0 ? allBoardPositions[x][y-1] : null;
+        neighbours[2] = x+1 < size ? allBoardPositions[x+1][y] : null;
+        neighbours[3] = y+1 < size ? allBoardPositions[x][y+1] : null;
         let surrounder = 0;
-        let numberOfPlaces = 0;
-        for(let neighbour of this.neighbours){
-            if(neighbour != null){
-                numberOfPlaces++;
-                if(neighbour.getStone() != null){
-                    surrounder++;
+        let possibleSurrounder = 0;
+        let neighboursSurrounded = new Array<boolean>();
+        testedInGroup.push(pos);
+        if(pos.getStone() != null){
+            for(let neighbour of neighbours){
+                if(neighbour != null){
+                    possibleSurrounder++;
+                    if(neighbour.getStone() != null){
+                        surrounder++;
+                        if(neighbour.getStone().getOwner() == pos.getStone().getOwner()){
+                            neighboursSurrounded.push(this.testSurround(testedInGroup, neighbour, allBoardPositions, size));
+                        }
+                    }
+                }
+            }
+            for(let surround of neighboursSurrounded){
+                if(!surround){
+                    isSurrounded = false;
                 }
             }
         }
-        isSurrounded = surrounder == numberOfPlaces;
         return isSurrounded;
     }
 }
