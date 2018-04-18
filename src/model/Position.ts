@@ -37,7 +37,7 @@ export class BoardPosition{
 
     //tests if the stone is != null and if he is surrounded
     public testSurround(testedInGroup: BoardPosition[], pos: BoardPosition, allBoardPositions: BoardPosition[][], size: number): boolean{
-        let isSurrounded = true;
+        let isSurrounded = false;
         let neighbours = new Array<BoardPosition>();
         let x = pos.getX();
         let y = pos.getY();
@@ -55,15 +55,30 @@ export class BoardPosition{
                     possibleSurrounder++;
                     if(neighbour.getStone() != null){
                         surrounder++;
-                        if(neighbour.getStone().getOwner() == pos.getStone().getOwner()){
+                        let isTested = false;
+                        for(let testedNeighbour of testedInGroup){
+                            if(testedNeighbour == neighbour){
+                                isTested = true;
+                                break;
+                            }
+                        }
+                        if(neighbour.getStone().getOwner() == pos.getStone().getOwner() && !isTested){
                             neighboursSurrounded.push(this.testSurround(testedInGroup, neighbour, allBoardPositions, size));
                         }
                     }
                 }
             }
+            isSurrounded = possibleSurrounder == surrounder;
+            if(isSurrounded){
+                
+            }
             for(let surround of neighboursSurrounded){
                 if(!surround){
                     isSurrounded = false;
+                    break;
+                }
+                else{
+                    isSurrounded = true;
                 }
             }
         }

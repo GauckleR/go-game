@@ -94,10 +94,9 @@ export class Board {
             for (let pos of x){
                 let group = new Array<BoardPosition>();
                 if(pos.testSurround(group, pos, this.boardPositions, this.size)){
-                    //something
-                }
-                for(let member of group){
-                    this.boardPositions[member.getX()][member.getY()] = null;
+                    for(let member of group){
+                        this.boardPositions[member.getX()][member.getY()].setStone(null);
+                    }
                 }
             }
         }
